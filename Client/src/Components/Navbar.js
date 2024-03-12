@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import logo from "../Images/shey-logo.png"
+import { useSelector } from "react-redux";
 
 function Navbar() {
+    const {cartTotalQuantity}= useSelector((store) => store.cart);
+   
     const handleSearch=() => {
         
     }
     return ( 
-        <div className="mx-auto bg-black px-6 grid grid-cols-3 gap-4">
+        <div className="mx-auto bg-black px-10 grid grid-cols-3 gap-4 sticky top-0 z-[999]">
             <Link to="/"><div>
                <img className="bg-black" src={logo} alt="" width={100} height={100}/>
             </div></Link>
@@ -26,7 +29,7 @@ function Navbar() {
                         </svg></span>
                     </label>
             </div>
-            <div className="group grid grid-cols-2 gap-4 col-end-7 col-span-2">
+            <div className="group grid grid-cols-2 col-end-7 col-span-2">
                 <div className="flex items-center justify-center text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -36,12 +39,13 @@ function Navbar() {
                         <p className="text-black text-left pt-2 ps-3">Login</p>
                     </div>
                 </div>
-                <div className="flex items-center justify-center text-white">
+                <Link to ="/cart" className="flex items-center justify-center"> 
+                <div className="flex items-center justify-center text-white"> 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
-
-                </div>
+                    <span className="rounded-lg p-2 bg-red-500">{cartTotalQuantity}</span>
+                </div></Link>
             </div>
         </div>
      );

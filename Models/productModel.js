@@ -1,8 +1,8 @@
-const mongoose = require(mongoose)
+const mongoose = require("mongoose")
 
 const reviewSchema = mongoose.Schema ({
     userID: {
-        type: mongoose.Schema.Type.Objectid
+        type: mongoose.Schema.Types.ObjectId
     },
     name: {
         type:String,
@@ -20,7 +20,7 @@ const reviewSchema = mongoose.Schema ({
     timeStamps: true
 })
 
- const productSchema = mogoose.Schema ({
+ const productSchema = new mongoose.Schema ({
     
     title: {
         type : String , 
@@ -57,10 +57,10 @@ const reviewSchema = mongoose.Schema ({
     discountPercentage: {
         type:Number
     },
-    image: {
-        type: Array,
+    image: [{
+        type: String,
         required: true
-    },
+    }],
     reviews: [reviewSchema]
  },{
     timeStamps: true

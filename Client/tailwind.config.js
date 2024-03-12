@@ -7,7 +7,7 @@ module.exports = {
   plugins: [],
   variants: {
     extend: {
-      visibility: ["group-hover","cart-hover"],
+      visibility: ["group-hover"],
     },
   },
 }

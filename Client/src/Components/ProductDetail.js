@@ -1,43 +1,84 @@
 import { useParams } from "react-router-dom";
-import { products } from "./Utills/Custom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductsById } from "./Redux/Actions/actions";
+import { useEffect} from "react";
+import {addItem, decereaseCart} from "./Redux/Slices/cartSlice"
 function ProductDetail() {
-    
-    let params= useParams();
-    let productId=params.id; 
+    const params = useParams();
+    const productId = params.id;
+    const dispatch= useDispatch();
 
-    const productDetail= products.find(product => product.id == productId);
+    const { product, status, error } = useSelector((state) => state.productReducer.productById);
+    const { cartItems } = useSelector((state) => state.cart);
+
+    const itemIndex = cartItems.findIndex((item) => item._id === product._id);
+    const cartQuantity = itemIndex >= 0 ? cartItems[itemIndex].cartQuantity : 0;
+
+    useEffect(() => {
+        if (productId) {
+            dispatch(fetchProductsById(productId));
+        }
+    }, [dispatch, productId]);
+
+
+    const handleDecreseQty = (cartItem) =>{
+        dispatch(decereaseCart(cartItem))
+    }
+    const handleIncreseQty = (cartItem) =>{
+        dispatch(addItem(cartItem))
+    }
+
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+      }
+    
+      if (status === 'failed') {
+        return <div>Error: {error}</div>;
+      }
+   
     return ( 
         <div className="grid grid-cols-2 gap-4 p-6">
             <div className=""> 
-                <img src={productDetail.image} alt="Product Image"/>
+                <img src={product.thumbnail} alt="ProductImage"/>
             </div>
             <div className="text-left">
                 <div>
-                    <h4 className="text-xl text-orange-600 pb-2">{productDetail.name}</h4>
+                    <h4 className="text-xl text-orange-500 pb-2">{product.title}&nbsp;({product.brand})</h4>
                 </div>
                 <div>
                     <p className="text-stone-500 border-b-2 py-4">Description:</p>
-                    <p className="text-sm py-2">{productDetail.description}</p>
+                    <p className="text-sm py-2 border-b-2">{product.description}</p>
+                </div>
+                <div>
+                    <p className="text-stone-500 border-b-2 py-4">Category:</p>
+                    <p className="text-sm py-2 border-b-2">{product.category}</p>
                 </div>
                <div>
-                    <p className="text-stone-500 border-b-2 py-4">Price: <span className="text-orange-600">&#8377;{productDetail.price}</span></p>
+                    <p className="text-stone-500 border-b-2 py-4">Price: <span className="text-red-600">&nbsp;&#8377;{product.price}</span></p>
 
                </div>
                 <div>
                     <p className="text-stone-500 border-b-2 py-4 ">Select Quantity:</p>
-                    <div className="">
-                        {productDetail.countInStock > 0 ?
-                        <div className="grid grid-cols-2 gap-9"><select className="p-2 mt-4 rounded-md w-12">
-                            {[...Array(productDetail.countInStock).keys()].map((x,i)=> {
-                                return <option value={i+1} key={i} >{i+1}</option>;
-                            })}
-                        </select>
-                        <button className="rounded-md border border-orange-400 text-[#fb923c] px-4 
-                        py-2 mt-4 hover:bg-[#fb923c] hover:text-white">Add to Cart</button></div>:
+                    <div className="border-b-2 py-4">
+                        {product.stock > 0 ?
+                        <div className="grid grid-cols-2 gap-9">
+                                <div className="flex h-10">
+                                    <div className="flex justify-center text-left"> 
+                                        <p className="p-2 mr-2 text-md border rounded-lg bg-orange-500 text-white text-center w-16" onClick={()=>handleDecreseQty(product)}>-</p>
+                                        <p className="p-2 border rounded-lg w-16 text-center">{cartQuantity}</p>
+                                        <p className="p-2 ml-2 text-md w-16 text-center border rounded-lg bg-orange-500 text-white" onClick={()=>handleIncreseQty(product)}>+</p>
+                                    </div>
+                                                    
+                                </div>
+                            </div>:
                         <div className="rounded-md border border-red-500 text-red-500 px-4 
-                        py-2 mt-4 hover:bg-red-500 hover:text-white text-center">Out Of Stock</div>}
+                        py-2 hover:bg-red-500 hover:text-white text-center">Out Of Stock</div>}
                     </div>
                    
+                </div>
+                <div>
+                    <p className="text-stone-500 border-b-2 py-4">Reviews:</p>
+                    <p className="text-sm py-2 border-b-2">{product.rating}</p>
                 </div>
                 <div>
 
