@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 import logo from "../Images/shey-logo.png"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getTotal } from "./Redux/Slices/cartSlice";
 
 function Navbar() {
+    const dispatch= useDispatch()
     const {cartTotalQuantity}= useSelector((store) => store.cart);
+    const auth = useSelector((store) => store.auth)
    
+    useEffect (()=>{
+        dispatch(getTotal());
+    },[cartTotalQuantity,dispatch])
+    
     const handleSearch=() => {
         
     }
@@ -29,14 +37,14 @@ function Navbar() {
                         </svg></span>
                     </label>
             </div>
-            <div className="group grid grid-cols-2 col-end-7 col-span-2">
-                <div className="flex items-center justify-center text-white">
+            <div className="grid grid-cols-2 col-end-7 col-span-2">
+                <div className="group flex items-center justify-center text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                     </svg>
-                    <div className="p-1 hidden group-hover:flex w-28 h-28 bg-slate-200
-                     rounded-lg absolute right-6 top-12 text-black z-40">
-                        <p className="text-black text-left pt-2 ps-3">Login</p>
+                    <div className="p-1 hidden group-hover:flex w-28 h-28 bg-white
+                     rounded-lg absolute right-[100px] top-12 text-black z-40 shadow-lg">
+                        <Link to="/register"><p className="text-black text-left pt-2 ps-3">{auth._id ? "Login":"LogOut"}</p></Link>
                     </div>
                 </div>
                 <Link to ="/cart" className="flex items-center justify-center"> 

@@ -10,7 +10,7 @@ function Cart() {
 
     useEffect(()=>{
         dispatch(getTotal());
-    },[cart])
+    },[cart,dispatch])
 
     const handleRemoveItem= (cartItem) =>{
         dispatch(removeItem(cartItem))
@@ -28,7 +28,7 @@ function Cart() {
         <div className="">
             <h2 className="text-2xl my-4">Shopping Cart</h2>
             {cart.cartItems.length === 0 ? (
-                <div className="text-center flex items-center justify-center">
+                <div className="text-center flex items-center justify-center ">
                     <div className="m-auto">
                         <div className="select-none flex items-center justify-center mt-5">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-16 h-16">
@@ -47,7 +47,7 @@ function Cart() {
             ): (
                 <div className="mx-8">
                     <div>
-                        <div className="grid grid-cols-2 text-gray-500 text-left">
+                        <div className="grid grid-cols-2 text-gray-500 text-left bg-white p-8">
                             <p className="t">PRODUCT</p>
                             <div className="grid grid-cols-3 gap-3">
                                 <p>PRICE</p>
@@ -60,7 +60,7 @@ function Cart() {
                     <div>
                         {cart.cartItems?.map((item)=>{
                             return (
-                                <div key={item._id} className="grid grid-cols-2 grid-4  bg-white shadow-lg rouded-lg my-3 text-left">
+                                <div key={item._id} className="grid grid-cols-2 grid-4  bg-white shadow-lg rouded-lg my-3 text-left pt-4">
                                     <div className=" flex gap-3">
                                         <div className="w-[100px] h-20 overflow-hidden m-2">
                                             <img src={item.thumbnail} alt="cartimage" className="rounded-lg object-contain shadow-xl mx-auto w-full h-full"/>
@@ -96,7 +96,7 @@ function Cart() {
                         <div className=" basis-1/4">
                             <div className="flex justify-between">
                                 <p>SubTotal:</p>
-                                <p className="basis-1/2 text-left">&#8377;{cart.cartTotalAmount}</p>
+                                <p className="basis-1/2 text-left text-lg">&#8377;{cart.cartTotalAmount}</p>
                             </div>
                             <div className="">
                                 <Link to="/" className="flex justify-end"><button className="px-10 w-full py-3 my-5 border border-blue-600 rounded-lg  text-center bg-blue-600 text-white

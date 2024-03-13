@@ -8,11 +8,11 @@ function ProductDetail() {
     const productId = params.id;
     const dispatch= useDispatch();
 
-    const { product, status, error } = useSelector((state) => state.productReducer.productById);
+    const { product, status, error } = useSelector((state) => state.product.productById);
     const { cartItems } = useSelector((state) => state.cart);
 
     const itemIndex = cartItems.findIndex((item) => item._id === product._id);
-    const cartQuantity = itemIndex >= 0 ? cartItems[itemIndex].cartQuantity : 0;
+    const cartQuantity = itemIndex > 1 ? cartItems[itemIndex].cartQuantity : 1;
 
     useEffect(() => {
         if (productId) {
@@ -37,7 +37,7 @@ function ProductDetail() {
       }
    
     return ( 
-        <div className="grid grid-cols-2 gap-4 p-6">
+        <div className="grid grid-cols-2 gap-4 p-6 bg-white">
             <div className=""> 
                 <img src={product.thumbnail} alt="ProductImage"/>
             </div>
@@ -64,9 +64,9 @@ function ProductDetail() {
                         <div className="grid grid-cols-2 gap-9">
                                 <div className="flex h-10">
                                     <div className="flex justify-center text-left"> 
-                                        <p className="p-2 mr-2 text-md border rounded-lg bg-orange-500 text-white text-center w-16" onClick={()=>handleDecreseQty(product)}>-</p>
+                                        <button className="p-2 mr-2 text-md border rounded-lg bg-orange-500 text-white text-center w-16" disabled={cartQuantity===1} onClick={()=>handleDecreseQty(product)}>-</button>
                                         <p className="p-2 border rounded-lg w-16 text-center">{cartQuantity}</p>
-                                        <p className="p-2 ml-2 text-md w-16 text-center border rounded-lg bg-orange-500 text-white" onClick={()=>handleIncreseQty(product)}>+</p>
+                                        <button className="p-2 ml-2 text-md w-16 text-center border rounded-lg bg-orange-500 text-white" onClick={()=>handleIncreseQty(product)}>+</button>
                                     </div>
                                                     
                                 </div>

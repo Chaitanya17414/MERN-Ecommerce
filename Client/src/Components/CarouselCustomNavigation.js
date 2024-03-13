@@ -17,7 +17,7 @@ function CarouselCustomNavigation() {
                 <div>
                     <img src={slider2} alt="banner2"/>
                     <div className="absolute left-1/4 top-1/3 ms-10 text-center bg-transparent">
-                        <p className="text-3xltext-white">The Most Beautiful <br/>Products In Our Shop</p>
+                        <p className="text-3xl text-white">The Most Beautiful <br/>Products In Our Shop</p>
                         <button className="border border-orange-400 text-[#fb923c] px-4 py-2 mt-3 hover:bg-[#fb923c] hover:text-white">Shop Now</button>
                     </div>
                     

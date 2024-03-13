@@ -10,14 +10,13 @@ import { Provider } from 'react-redux';
 import Store from "./Components/Redux/store"
 import Cart from './Components/Cart';
 import {ToastContainer} from "react-toastify"
-import { getTotal } from './Components/Redux/Slices/cartSlice';
-
+import Register from './Components/Register';
+import Login from './Components/Login';
 
 function App() {
-  Store.dispatch(getTotal())
   return (
     <Provider store={Store} >
-    <div className="App">
+    <div className="text-center bg-gray-100 min-h-screen">
      <BrowserRouter>
      <ToastContainer />
       <Navbar />
@@ -25,8 +24,10 @@ function App() {
           <Route exact path="/" element={<Home/>}/>
           <Route exact path="/product/:id" element={<ProductDetail />} />
           <Route exact path="/cart" element={<Cart />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/login" element={<Login />} />
         </Routes>
-        <Footer />
+        <Footer/>
      </BrowserRouter>
      
     </div>

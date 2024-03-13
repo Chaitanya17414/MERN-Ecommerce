@@ -4,10 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'font-awesome/css/font-awesome.min.css';
+import { getTotal } from './Components/Redux/Slices/cartSlice';
+import Store from "./Components/Redux/store"
+import { fetchAllProducts } from './Components/Redux/Actions/actions';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+Store.dispatch(getTotal())
+Store.dispatch(fetchAllProducts())
 root.render(
-  
     <App />
 
 );
