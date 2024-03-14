@@ -26,9 +26,6 @@ function ProductsListing() {
     }
     return ( 
         <div className="container mx-auto">
-            <div>
-
-            </div>
             <div className="grid grid-cols-4 gap-4">
                 {products.map((items)=>{
                     return(

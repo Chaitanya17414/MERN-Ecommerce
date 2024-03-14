@@ -1,5 +1,5 @@
 import {createSlice,combineReducers  } from "@reduxjs/toolkit";
-import { fetchAllProducts,fetchProductsById } from "../Actions/actions";
+import { fetchAllProducts,fetchProductsById,filterProducts, searchProducts, sortProducts } from "../Actions/actions";
 
 const productSlice = createSlice({
     name: 'products',
@@ -7,6 +7,9 @@ const productSlice = createSlice({
       products: [],
       status: 'idle',
       error: null
+    },
+    reducers:{
+
     },
     extraReducers: (builder) => {
       builder
@@ -18,6 +21,39 @@ const productSlice = createSlice({
           state.products = action.payload;
         })
         .addCase(fetchAllProducts.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.error.message;
+        })
+        .addCase(searchProducts.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(searchProducts.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          state.products = action.payload;
+        })
+        .addCase(searchProducts.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.error.message;
+        })
+        .addCase(sortProducts.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(sortProducts.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          state.products = action.payload;
+        })
+        .addCase(sortProducts.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.error.message;
+        })
+        .addCase(filterProducts.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(filterProducts.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          state.products = action.payload;
+        })
+        .addCase(filterProducts.rejected, (state, action) => {
           state.status = 'failed';
           state.error = action.error.message;
         });

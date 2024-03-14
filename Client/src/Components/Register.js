@@ -34,7 +34,7 @@ function Register() {
 
   return (
     <form onSubmit={handleSubmit} className='m-4 w-1/3 mx-auto my-[40px] shadow-lg p-4 rounded-lg bg-white'>
-        <h2 className='m-3 text-2xl'>Register From</h2>
+        <h2 className='m-3 text-2xl'>Register Here</h2>
       <div>
         <input
           type="text"

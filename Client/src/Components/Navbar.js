@@ -1,22 +1,24 @@
 import { Link } from "react-router-dom";
 import logo from "../Images/shey-logo.png"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getTotal } from "./Redux/Slices/cartSlice";
 import { logoutUser } from "./Redux/Slices/authSlice";
 import { toast } from "react-toastify";
+import { searchProducts } from "./Redux/Actions/actions";
 
 function Navbar() {
     const dispatch= useDispatch()
     const {cartTotalQuantity}= useSelector((store) => store.cart);
     const auth = useSelector((store) => store.auth)
+    const [searchKey, setSearchKey] = useState("");
    
     useEffect (()=>{
         dispatch(getTotal());
     },[cartTotalQuantity,dispatch])
     
     const handleSearch=() => {
-        
+        dispatch(searchProducts(searchKey))
     }
     return ( 
         <div className="mx-auto bg-black px-10 grid grid-cols-3 gap-4 sticky top-0 z-[999]">
@@ -29,11 +31,12 @@ function Navbar() {
                                 type="search"
                                 name="search-form"
                                 id="search-form"
+                                value={searchKey}
                                 className="search-input p-2 w-full mt-2 rounded-lg hover:"
                                 placeholder="Search for..." 
-                                onChange={(e) => handleSearch(e.target.value)}
+                                onChange={(e) => setSearchKey(e.target.value)}
                     />
-                    <span className="text-white flex ms-2 items-center justify-center mt-2 ">
+                    <span className="text-white flex ms-2 items-center justify-center mt-2 " onClick={handleSearch}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                         </svg></span>
