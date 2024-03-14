@@ -73,7 +73,7 @@ function Register() {
       </div>
       {auth.registerStatus === "rejected"?(<p className='text-red-500'>{auth.registerError}</p>):""}
       <div className='grid grid-cols-2 my-5'>
-        <Link to="/login"><p className='text-md text-left underline-offset-0 underline text-blue-600'>Login Here</p></Link>
+        <Link to="/login"><span className='text-gray-500 text-md'>Have an account?</span><span className='text-md text-left underline-offset-0 underline text-blue-600'>Login</span></Link>
         <button type="submit" className="rounded-md border border-orange-500 text-orange-500 px-4 
         py-2 hover:bg-orange-500 hover:text-white text-center" onClick={handleSubmit}>
             {auth.registerStatus === "pending"? "submitting":"Register"}</button>

@@ -6,16 +6,24 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Components/Home';
 import Footer from './Components/Footer';
 import ProductDetail from './Components/ProductDetail';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import Store from "./Components/Redux/store"
 import Cart from './Components/Cart';
 import {ToastContainer} from "react-toastify"
 import Register from './Components/Register';
 import Login from './Components/Login';
+import { loadUser } from './Components/Redux/Slices/authSlice';
+import { useEffect } from 'react';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser(null));
+  }, [dispatch]);
+
   return (
-    <Provider store={Store} >
+    
     <div className="text-center bg-gray-100 min-h-screen">
      <BrowserRouter>
      <ToastContainer />
@@ -30,8 +38,7 @@ function App() {
         <Footer/>
      </BrowserRouter>
      
-    </div>
-    </Provider>
+    </div> 
   );
 }
 

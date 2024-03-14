@@ -3,6 +3,8 @@ import logo from "../Images/shey-logo.png"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTotal } from "./Redux/Slices/cartSlice";
+import { logoutUser } from "./Redux/Slices/authSlice";
+import { toast } from "react-toastify";
 
 function Navbar() {
     const dispatch= useDispatch()
@@ -44,7 +46,16 @@ function Navbar() {
                     </svg>
                     <div className="p-1 hidden group-hover:flex w-28 h-28 bg-white
                      rounded-lg absolute right-[100px] top-12 text-black z-40 shadow-lg">
-                        <Link to="/register"><p className="text-black text-left pt-2 ps-3">{auth._id ? "Login":"LogOut"}</p></Link>
+                        {auth._id ? (
+                            <p className="text-black text-left pt-2 ps-3" onClick={()=>{
+                                dispatch(logoutUser(null));
+                                toast.warning("Logged Out!...",{position:"bottom-left"})
+                                }}>LogOut</p>
+                        ):(
+                            <div>
+                            <Link to="/login"><p className="text-black text-left pt-2 ps-3">Login</p></Link>
+                            <Link to="/register"><p className="text-black text-left pt-2 ps-3">Register</p></Link>
+                            </div>)}
                     </div>
                 </div>
                 <Link to ="/cart" className="flex items-center justify-center"> 

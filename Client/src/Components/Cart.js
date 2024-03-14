@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addItem, clearCart, decereaseCart, getTotal, removeItem } from "./Redux/Slices/cartSlice";
 import { useEffect } from "react";
 
 function Cart() {
     const dispatch = useDispatch();
     const cart = useSelector((store) => store.cart)
+    const auth = useSelector((store) => store.auth)
    
 
     useEffect(()=>{
@@ -99,8 +100,14 @@ function Cart() {
                                 <p className="basis-1/2 text-left text-lg">&#8377;{cart.cartTotalAmount}</p>
                             </div>
                             <div className="">
-                                <Link to="/" className="flex justify-end"><button className="px-10 w-full py-3 my-5 border border-blue-600 rounded-lg  text-center bg-blue-600 text-white
-                                hover:text-blue-600 hover:bg-white">Checkout</button></Link>
+                                {auth._id ? 
+                                (
+                                    <Link to="/" className="flex justify-end"><button className="px-10 w-full py-3 my-5 border border-blue-600 rounded-lg  text-center bg-blue-600 text-white
+                                    hover:text-blue-600 hover:bg-white">Checkout</button></Link>
+                                ):(
+                                    <Link to="/login" className="flex justify-end"><button className="px-10 w-full py-3 my-5 border border-yellow-600 rounded-lg  text-center bg-yellow-600 text-white
+                                    hover:text-yellow-600 hover:bg-white">Login to checkout</button></Link>
+                                )}
                                 <div className="">
                                 <Link to="/" className="flex justify-start">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">

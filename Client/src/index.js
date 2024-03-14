@@ -7,13 +7,19 @@ import 'font-awesome/css/font-awesome.min.css';
 import { getTotal } from './Components/Redux/Slices/cartSlice';
 import Store from "./Components/Redux/store"
 import { fetchAllProducts } from './Components/Redux/Actions/actions';
+import { loadUser } from './Components/Redux/Slices/authSlice';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 Store.dispatch(getTotal())
 Store.dispatch(fetchAllProducts())
-root.render(
-    <App />
+Store.dispatch(loadUser(null))
 
+root.render(
+    <Provider store={Store} >
+        <App />
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
