@@ -50,10 +50,11 @@ function Navbar() {
                     <div className="p-1 hidden group-hover:flex w-28 h-28 bg-white
                      rounded-lg absolute right-[100px] top-12 text-black z-40 shadow-lg">
                         {auth._id ? (
+                            <div><Link to="/order"><p className="text-black text-left pt-2 ps-3">Orders</p></Link>
                             <p className="text-black text-left pt-2 ps-3" onClick={()=>{
                                 dispatch(logoutUser(null));
                                 toast.warning("Logged Out!...",{position:"bottom-left"})
-                                }}>LogOut</p>
+                                }}>LogOut</p></div>
                         ):(
                             <div>
                             <Link to="/login"><p className="text-black text-left pt-2 ps-3">Login</p></Link>

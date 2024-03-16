@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addItem, clearCart, decereaseCart, getTotal, removeItem } from "./Redux/Slices/cartSlice";
 import { useEffect } from "react";
+import {loadStripe} from '@stripe/stripe-js';
+import PayButton from "./PayButton";
 
 function Cart() {
     const dispatch = useDispatch();
@@ -25,6 +27,7 @@ function Cart() {
     const handleClearCart = () => {
         dispatch(clearCart())
     }
+    
     return ( 
         <div className="">
             <h2 className="text-2xl my-4">Shopping Cart</h2>
@@ -49,7 +52,7 @@ function Cart() {
                 <div className="mx-8">
                     <div>
                         <div className="grid grid-cols-2 text-gray-500 text-left bg-white p-8">
-                            <p className="t">PRODUCT</p>
+                            <p className="">PRODUCT</p>
                             <div className="grid grid-cols-3 gap-3">
                                 <p>PRICE</p>
                                 <p>QUANTITY</p>
@@ -102,8 +105,7 @@ function Cart() {
                             <div className="">
                                 {auth._id ? 
                                 (
-                                    <Link to="/" className="flex justify-end"><button className="px-10 w-full py-3 my-5 border border-blue-600 rounded-lg  text-center bg-blue-600 text-white
-                                    hover:text-blue-600 hover:bg-white">Checkout</button></Link>
+                                   <PayButton cart={cart}/>
                                 ):(
                                     <Link to="/login" className="flex justify-end"><button className="px-10 w-full py-3 my-5 border border-yellow-600 rounded-lg  text-center bg-yellow-600 text-white
                                     hover:text-yellow-600 hover:bg-white">Login to checkout</button></Link>

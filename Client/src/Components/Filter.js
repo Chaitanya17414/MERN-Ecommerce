@@ -10,18 +10,17 @@ const Filter = () => {
   const handleSort =(e) =>{
     const selectedSortBy = e.target.value;
     setSelectedSortBy(selectedSortBy)
-    console.log(selectedSortBy)
     dispatch(sortProducts(selectedSortBy))
   }
   const handleCatogory =(e) =>{
     const selectedCategory = e.target.value
     setSelectedCategory(selectedCategory)
-    console.log(selectedCategory)
+  
     dispatch(filterProducts(selectedCategory))
   }
 
   return (
-    <div className='container flex justify-end gap-5 my-5'>
+    <div className='container flex justify-end gap-5 my-5 mx-auto'>
         <div >
             <select value={selectedSortBy} onChange={(e)=>handleSort(e)} className='p-3 border border-gray-500 rounded-lg bg-white'>
                  <option  value="popular">Popular</option>

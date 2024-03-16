@@ -14,6 +14,10 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import { loadUser } from './Components/Redux/Slices/authSlice';
 import { useEffect } from 'react';
+import CheckoutSuccess from './Components/CheckoutSucess';
+import NotFound from './Components/NotFound';
+import Order from './Components/Order';
+import OrderDetail from './Components/OrderDetail';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +38,10 @@ function App() {
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/checkout-success" element={<CheckoutSuccess />} />
+          <Route exact path="/order" element={<Order />} />
+          <Route exact path="/order/:id" element={<OrderDetail />} />
+          <Route exact path="*" element={<NotFound />} />
         </Routes>
         <Footer/>
      </BrowserRouter>

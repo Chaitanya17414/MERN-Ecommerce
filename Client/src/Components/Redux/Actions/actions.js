@@ -22,7 +22,6 @@ export const fetchProductsById = createAsyncThunk(
             return response.data
         }
         catch (err) {
-          console.log(err.response.data)
             throw rejectWithValue(err.response.data)
         }
     }
@@ -69,7 +68,6 @@ export const searchProducts = createAsyncThunk(
         searchProducts= response.data
         if(searchkey) {
           searchProducts = response.data.filter(product =>{return product.title.toLowerCase().includes(searchkey)})
-          console.log(searchProducts)
         }
          return searchProducts;
       } catch (err) {
@@ -113,3 +111,62 @@ export const filterProducts = createAsyncThunk(
       }
     }
 );
+export const checkoutUser = createAsyncThunk(
+  "checkout/checkoutUser",
+  async ({token,cart,demoItems,user},{rejectWithValue}) => {
+          const cartItems = new Array()
+
+          for(var i=0; i<demoItems.length;i++) {
+              var item ={
+                name:demoItems[i].title,
+                quantity:demoItems[i].cartQuantity,
+                price: demoItems[i].price,
+                _id: demoItems[i]._id
+              }
+              cartItems.push(item)
+          }
+
+      try {
+          const responce = await axios.post(`/api/orders/checkout`,{
+            token:token,
+            cart:cart,
+            cartItems:cartItems,
+            user:user
+          });
+          return responce.data
+      }
+      catch (err) {
+          throw rejectWithValue(err.response.data)
+      }
+  }
+)
+
+export const fetchOrdersByUser = createAsyncThunk(
+  "products/fetchOrdersByUser",
+  async (orderUserId,{rejectWithValue}) => {
+      try {
+          const response = await axios.post(`/api/orders/getordersbyuser`,{
+            userId: orderUserId
+          });
+
+          return response.data
+      }
+      catch (err) {
+          throw rejectWithValue(err.response.data)
+      }
+  }
+)
+export const fetchOrderById = createAsyncThunk(
+  "products/fetchOrderById",
+  async (orderId,{rejectWithValue}) => {
+      try {
+          const response = await axios.post(`/api/orders/getorderbyid`,{
+            orderId: orderId
+          });
+          return response.data
+      }
+      catch (err) {
+          throw rejectWithValue(err.response.data)
+      }
+  }
+)

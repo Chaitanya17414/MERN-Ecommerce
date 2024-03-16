@@ -31,15 +31,16 @@ const cartSlice = createSlice({
         removeItem: (state, action) => {
             const nextCartItems= state.cartItems.filter(item => item._id !== action.payload._id);;
             state.cartItems= nextCartItems
-            localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
             toast.error(`${action.payload.title} removed from cart`,{
                 position: "bottom-left"
             })
+            localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
           },
           decereaseCart: (state,action) =>{
             const itemIndex = state.cartItems.findIndex(item => item._id === action.payload._id)
             if (state.cartItems[itemIndex].cartQuantity >1) {
                 state.cartItems[itemIndex].cartQuantity -= 1
+                localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
                 toast.error(`Decreased ${state.cartItems[itemIndex].title} cart quantity` ,{
                     position: "bottom-left"
                 })
@@ -47,10 +48,10 @@ const cartSlice = createSlice({
                 }else if(state.cartItems[itemIndex].cartQuantity === 1){
                     const nextCartItems= state.cartItems.filter(item => item._id !== action.payload._id);;
                     state.cartItems= nextCartItems
-                    localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
                     toast.error(`${action.payload.title} removed from cart`,{
                         position: "bottom-left"
                     })
+                    localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
                 }
             state.cartTotalQuantity -= 1; 
             localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
@@ -75,6 +76,7 @@ const cartSlice = createSlice({
             })
             state.cartTotalQuantity=quantity
             state.cartTotalAmount= total
+            localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
           }
     }
 })
