@@ -2,6 +2,7 @@ import { loginUser, registerUser, updateUser } from "../Actions/actions";
 import  {jwtDecode} from "jwt-decode";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast} from 'react-toastify';
+import { useDispatch } from "react-redux";
 
 const initialState = {
     token: localStorage.getItem("token")? (localStorage.getItem("token")):"",
@@ -60,6 +61,8 @@ const authSlice = createSlice({
           .addCase(registerUser.fulfilled, (state, action) => {
             if(action.payload) {
                 const user = jwtDecode(action.payload)
+
+                toast.success("User Sucessfully Registered......",{position:"bottom-left"})
                 return {
                     ...state,
                     token: action.payload,
@@ -80,7 +83,7 @@ const authSlice = createSlice({
           .addCase(loginUser.fulfilled, (state, action) => {
             if(action.payload) {
                 const user = jwtDecode(action.payload)
-                toast.success(`User successfully loggedIn.....`, {
+                toast.success(`User Successfully LoggedIn.....`, {
                   position:"bottom-left"
               })
                 return {
@@ -104,6 +107,7 @@ const authSlice = createSlice({
           .addCase(updateUser.fulfilled, (state, action) => {
             if(action.payload) {
                 const user = jwtDecode(action.payload)
+
                 return {
                     ...state,
                     token: action.payload,

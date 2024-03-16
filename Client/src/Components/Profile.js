@@ -15,12 +15,6 @@ function Profile() {
     password: "",
   });
 
-  // useEffect(()=>{
-  //   if(auth._id) {
-  //       navigate("/login")
-  //   }
-  // },[auth._id,navigate])
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -31,11 +25,12 @@ function Profile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   dispatch(updateUser({updatedUser:formData,userId:auth._id}))
-  //  toast.success("User updated Sucessfully......",{position:"bottom-left"})
-
-  //  dispatch(logoutUser(null));
-  //  toast.warning("Logged Out!...",{position:"bottom-left"})
+    dispatch(updateUser({updatedUser:formData,userId:auth._id}))
+    if(auth.updateStatus === "Success") {
+      dispatch(logoutUser(null));
+      toast.success("Updated successfull..Please login again..",{position:"bottom-left"})
+      navigate("/login")
+    }
   };
 
   return (
