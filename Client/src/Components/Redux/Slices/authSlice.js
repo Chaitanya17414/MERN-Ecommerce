@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from "../Actions/actions";
+import { loginUser, registerUser, updateUser } from "../Actions/actions";
 import  {jwtDecode} from "jwt-decode";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast} from 'react-toastify';
@@ -16,7 +16,7 @@ const initialState = {
 
 }
 const authSlice = createSlice({
-    name:"Cart",
+    name:"authSlice",
     initialState,
     reducers: {
         loadUser: (state, action)=> {
@@ -47,6 +47,8 @@ const authSlice = createSlice({
               registerError: "",
               loginStatus: "",
               loginError: "",
+              updateStatus:"",
+              updateError:""
             };
           },
     },
@@ -69,8 +71,8 @@ const authSlice = createSlice({
             }else return state 
           })
           .addCase(registerUser.rejected, (state, action) => {
-            state.loginStatus = 'rejected';
-            state.loginError= action.payload;
+            state.registerStatus = 'rejected';
+            state.registerError= action.payload;
           })
           .addCase(loginUser.pending, (state) => {
             state.loginStatus = 'pending';
@@ -96,6 +98,25 @@ const authSlice = createSlice({
           .addCase(loginUser.rejected, (state, action) => {
             state.loginStatus = 'rejected';
             state.loginError= action.payload;
+          }) .addCase(updateUser.pending, (state) => {
+            state.updateStatus = 'pending';
+          })
+          .addCase(updateUser.fulfilled, (state, action) => {
+            if(action.payload) {
+                const user = jwtDecode(action.payload)
+                return {
+                    ...state,
+                    token: action.payload,
+                    name:user.name,
+                    email:user.email,
+                    _id:user._id,
+                    updateStatus:"Success"
+                }
+            }else return state 
+          })
+          .addCase(updateUser.rejected, (state, action) => {
+            state.updateStatus = 'rejected';
+            state.updateError= action.payload;
           });
     }
 })

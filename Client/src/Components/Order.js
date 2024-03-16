@@ -29,15 +29,15 @@ function Order() {
                     {loading && <Shimmer />}
                     <div>
                        
-                        {(user._id ||orders)? (orders.map((item)=>{
+                        {orders? (orders.map((item)=>{
                             return(
                             <Link to={`/order/${item._id}`}>
                                 <div key={item.transactionId} className="grid grid-cols-7 gap-4 text-left my-4 bg-orange-100 p-3 rounded-xl hover:bg-orange-200">
                                     <div className="col-span-2">#{item._id}</div>
-                                    <div>{item.orderAmount}</div>
+                                    <div>&#8377;{item.orderAmount}</div>
                                     <div>{item.createdAt.substring(0,10)}</div>
                                     <div className="col-span-2">{item.transactionId}</div>
-                                    <div>{item.isDelivered ? <p>isDelivered</p>:<p>Order Placed</p>}</div>
+                                    <div>{item.isDelivered ? <p>Delivered</p>:<p>Order Placed</p>}</div>
                                 </div>
                             </Link>)})):(
                                 <div>

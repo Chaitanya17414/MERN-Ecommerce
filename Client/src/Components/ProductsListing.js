@@ -8,7 +8,7 @@ import { addItem} from "./Redux/Slices/cartSlice";
 function ProductsListing() {
     const dispatch= useDispatch(); 
     const { products, status, error } = useSelector((state) => state.product.productList);
-
+  
     useEffect(() => {
       dispatch(fetchAllProducts());
     }, [dispatch]);

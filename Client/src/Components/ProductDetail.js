@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductsById } from "./Redux/Actions/actions";
 import { useEffect} from "react";
 import {addItem, decereaseCart} from "./Redux/Slices/cartSlice"
+import Review from "./Review";
 function ProductDetail() {
     const params = useParams();
     const productId = params.id;
@@ -10,6 +11,7 @@ function ProductDetail() {
 
     const { product, status, error } = useSelector((state) => state.product.productById);
     const { cartItems } = useSelector((state) => state.cart);
+    const auth = useSelector((state) => state.auth);
 
     const itemIndex = cartItems.findIndex((item) => item._id === product._id);
     const cartQuantity = itemIndex > 1 ? cartItems[itemIndex].cartQuantity : 1;
@@ -76,10 +78,8 @@ function ProductDetail() {
                     </div>
                    
                 </div>
-                <div>
-                    <p className="text-stone-500 border-b-2 py-4">Reviews:</p>
-                    <p className="text-sm py-2 border-b-2">{product.rating}</p>
-                </div>
+                <Review product={product} auth={auth}/>
+                    
                 <div>
 
                 </div>

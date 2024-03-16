@@ -1,5 +1,5 @@
 import {createSlice,combineReducers  } from "@reduxjs/toolkit";
-import { fetchAllProducts,fetchProductsById,filterProducts, searchProducts, sortProducts } from "../Actions/actions";
+import { addReview, fetchAllProducts,fetchProductsById,filterProducts, searchProducts, sortProducts } from "../Actions/actions";
 
 const productSlice = createSlice({
     name: 'products',
@@ -83,9 +83,31 @@ const productSlice = createSlice({
         },
 
   })
+  const addReviewSlice = createSlice ({
+    name:"produt By Id",
+    initialState: {
+      status: 'idle',
+      error: null
+    },
+    extraReducers: (builder) => {
+      builder
+        .addCase(addReview.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(addReview.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+        })
+        .addCase(addReview.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.error.message;
+        });
+    },
+
+})
 
 const rootProductReducer = combineReducers({
   productList: productSlice.reducer,
-  productById: productByIdSlice.reducer
+  productById: productByIdSlice.reducer,
+  addReview:addReviewSlice.reducer
 });
 export default rootProductReducer;

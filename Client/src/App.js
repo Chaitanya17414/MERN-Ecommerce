@@ -6,8 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Components/Home';
 import Footer from './Components/Footer';
 import ProductDetail from './Components/ProductDetail';
-import { Provider, useDispatch } from 'react-redux';
-import Store from "./Components/Redux/store"
+import {useDispatch } from 'react-redux';
 import Cart from './Components/Cart';
 import {ToastContainer} from "react-toastify"
 import Register from './Components/Register';
@@ -18,6 +17,7 @@ import CheckoutSuccess from './Components/CheckoutSucess';
 import NotFound from './Components/NotFound';
 import Order from './Components/Order';
 import OrderDetail from './Components/OrderDetail';
+import Profile from './Components/Profile';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +41,7 @@ function App() {
           <Route exact path="/checkout-success" element={<CheckoutSuccess />} />
           <Route exact path="/order" element={<Order />} />
           <Route exact path="/order/:id" element={<OrderDetail />} />
+          <Route exact path="/profile" element={<Profile />} />
           <Route exact path="*" element={<NotFound />} />
         </Routes>
         <Footer/>

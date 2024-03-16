@@ -170,3 +170,37 @@ export const fetchOrderById = createAsyncThunk(
       }
   }
 )
+export const addReview = createAsyncThunk(
+  "products/addReview",
+  async ({review,product},{rejectWithValue}) => {
+      try {
+          const response = await axios.post(`/api/products/addreview`,{
+            review: review,
+            productId:product._id
+          });
+          alert(response.data)
+          window.location.reload()
+          return response.data
+      }
+      catch (err) {
+          throw rejectWithValue(err.response.data)
+      }
+  }
+)
+export const updateUser = createAsyncThunk(
+  "auth/updateUser",
+  async ({updatedUser,userId},{rejectWithValue}) => {
+      try {
+          const token = await axios.post(`/api/user/update`,{
+            updatedUser:updatedUser,
+            userId:userId
+          });
+          localStorage.setItem("token",token.data)
+          console.log(token)
+          return token.data
+      }
+      catch (err) {
+          throw rejectWithValue(err.response.data)
+      }
+  }
+)

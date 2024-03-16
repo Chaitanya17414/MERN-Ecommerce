@@ -66,6 +66,6 @@ const reviewSchema = mongoose.Schema ({
     timeStamps: true
 })
 
-const product = mongoose.model("product",productSchema)
+const Product = mongoose.model("product",productSchema)
 
-module.exports = product;
+module.exports = Product;

@@ -8,14 +8,12 @@ app.use(express.json())
 require("dotenv").config()
 var dbConnection = require('./db')
 
-var productRoutes =  require("./routes/producsRoute")
-var userRegisterRoute = require("./routes/userRegisterRouter")
-var userLoginRoute = require("./routes/userLoginRouter")
+var productRoutes =  require("./routes/productsRoute")
+var userRoute = require("./routes/userRouter")
 var stripe = require("./routes/stripeRoute")
 
 app.use('/api/products/',productRoutes)
-app.use('/api/user/',userRegisterRoute)
-app.use('/api/user/',userLoginRoute)
+app.use('/api/user/',userRoute)
 app.use('/api/orders/',stripe)
 
 // CORS configuration for preflight requests
