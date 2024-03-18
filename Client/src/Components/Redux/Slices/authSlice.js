@@ -1,18 +1,22 @@
-import { loginUser, registerUser, updateUser } from "../Actions/actions";
+import { deleteUser, fetchAllUsers, loginUser, registerUser, updateUser } from "../Actions/actions";
 import  {jwtDecode} from "jwt-decode";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,combineReducers } from "@reduxjs/toolkit";
 import { toast} from 'react-toastify';
-import { useDispatch } from "react-redux";
 
 const initialState = {
     token: localStorage.getItem("token")? (localStorage.getItem("token")):"",
     _id: "",
     name:"",
     email:"",
+    isAdmin:false,
     registerStatus:"",
     registerError:"",
     loginStatus:"",
     loginError:"",
+    updateStatus:"",
+    updateError:"",
+    usersStatus:"",
+    usersError:"",
     userLoaded: false
 
 }
@@ -31,6 +35,7 @@ const authSlice = createSlice({
                 name: user.name,
                 email: user.email,
                 _id: user._id,
+                isAdmin:user.isAdmin,
                 userLoaded: true,
               };
             } else return { ...state, userLoaded: true };
@@ -43,17 +48,18 @@ const authSlice = createSlice({
               token: "",
               name: "",
               email: "",
+              isAdmin:false,
               _id: "",
               registerStatus: "",
               registerError: "",
               loginStatus: "",
               loginError: "",
               updateStatus:"",
-              updateError:""
+              updateError:"",
             };
           },
     },
-    extraReducers: (builder) => {
+    extraReducers:(builder) => {
         builder
           .addCase(registerUser.pending, (state) => {
             state.registerStatus = 'pending';
@@ -61,7 +67,6 @@ const authSlice = createSlice({
           .addCase(registerUser.fulfilled, (state, action) => {
             if(action.payload) {
                 const user = jwtDecode(action.payload)
-
                 toast.success("User Sucessfully Registered......",{position:"bottom-left"})
                 return {
                     ...state,
@@ -69,6 +74,7 @@ const authSlice = createSlice({
                     name:user.name,
                     email:user.email,
                     _id:user._id,
+                    isAdmin:user.isAdmin,
                     registerStatus:"Success"
                 }
             }else return state 
@@ -91,6 +97,7 @@ const authSlice = createSlice({
                     token: action.payload,
                     name:user.name,
                     email:user.email,
+                    isAdmin:user.isAdmin,
                     _id:user._id,
                     loginStatus:"Success"
                 }
@@ -113,6 +120,7 @@ const authSlice = createSlice({
                     token: action.payload,
                     name:user.name,
                     email:user.email,
+                    isAdmin:user.isAdmin,
                     _id:user._id,
                     updateStatus:"Success"
                 }
@@ -124,6 +132,49 @@ const authSlice = createSlice({
           });
     }
 })
+const allUsersSlice = createSlice({
+  name: 'all users',
+  initialState: {
+    users: [],
+    status: 'idle',
+    error: null,
+    deleteStatus: 'idle',
+    deleteError: null
+  },
+  reducers:{},
+  extraReducers: (builder) => {
+    builder
+    .addCase(fetchAllUsers.pending, (state) => {
+      state.status = 'pending';
+    })
+    .addCase(fetchAllUsers.fulfilled, (state, action) => {
+      state.status = "Success"
+      state.users = action.payload
+    })
+    .addCase(fetchAllUsers.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.error= action.payload;
+    })
+    .addCase(deleteUser.pending, (state) => {
+      state.deleteStatus = 'pending';
+    })
+    .addCase(deleteUser.fulfilled, (state, action) => {
+      state.deleteStatus = "Success" 
+      state.users = action.payload.users
+      toast.success(`User deleted Successfully...`,{position:"bottom-left"})
+      
+    })
+    .addCase(deleteUser.rejected, (state, action) => {
+      state.deleteStatus = 'rejected';
+      state.deleteError= action.payload;
+      toast.warning(`${state.deleteError}`,{position:"bottom-left"})
+    });
+    }
+  })
 
 export const {loadUser,logoutUser} = authSlice.actions
-export default authSlice.reducer
+  const rootAuthSlice = combineReducers({
+        auth: authSlice.reducer,
+        allUsers:allUsersSlice.reducer
+  })
+export default rootAuthSlice

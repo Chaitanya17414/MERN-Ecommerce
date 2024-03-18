@@ -66,8 +66,17 @@ router.post("/getordersbyuser", async (req, res) => {
 router.post("/getorderbyid", async (req, res) => {
   try {
     const orderId = req.body.orderId;
-    const order = await Order.find({ _id:orderId }); 
+    const order = await Order.find({_id:orderId}); 
     res.send(order[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error..." });
+  }
+});
+router.get("/getAllOrders", async (req, res) => {
+  try {
+    const orders = await Order.find({}); 
+    res.send(orders);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error..." });

@@ -114,7 +114,7 @@ export const filterProducts = createAsyncThunk(
 export const checkoutUser = createAsyncThunk(
   "checkout/checkoutUser",
   async ({token,cart,demoItems,user},{rejectWithValue}) => {
-          const cartItems = new Array()
+          const cartItems = []
 
           for(var i=0; i<demoItems.length;i++) {
               var item ={
@@ -178,7 +178,6 @@ export const addReview = createAsyncThunk(
             review: review,
             productId:product._id
           });
-          alert(response.data)
           window.location.reload()
           return response.data
       }
@@ -204,3 +203,59 @@ export const updateUser = createAsyncThunk(
       }
   }
 )
+
+export const fetchAllUsers = createAsyncThunk(
+  'users/fetchAll',
+  async () => {
+      try {
+        const response = await axios.get("/api/user/getAllUsers");
+        return response.data;
+      } catch (err) {
+        throw new Error('Failed to fetch users'); 
+      }
+    }
+);
+export const deleteUser= createAsyncThunk(
+  'users/deleteUser',
+  async ({userId,currUserId},{rejectWithValue}) => {
+      try {
+        const response = await axios.post("/api/user/deleteUser ",{userId,currUserId});
+        return response.data;
+      } catch (err) {
+        throw rejectWithValue(err.response.data); 
+      }
+    }
+);
+export const deleteProduct= createAsyncThunk(
+  'users/deleteProduct',
+  async ({productId},{rejectWithValue}) => {
+      try {
+        const response = await axios.post("/api/products/deleteProduct ",{productId});
+        return response.data;
+      } catch (err) {
+        throw rejectWithValue(err.response.data); 
+      }
+    }
+);
+export const addNewProduct= createAsyncThunk(
+  'product/addNewProduct',
+  async (product,{rejectWithValue}) => {
+      try {
+        const response = await axios.post("/api/products/addProduct ",{product:product});
+        return response.data;
+      } catch (err) {
+        throw rejectWithValue(err.response.data); 
+      }
+    }
+);
+export const fetchAllOrders = createAsyncThunk(
+  'orders/fetchAllOrders',
+  async () => {
+      try {
+        const response = await axios.get("/api/orders/getAllOrders");
+        return response.data;
+      } catch (err) {
+        throw new Error('Failed to fetch users'); 
+      }
+    }
+);

@@ -1,5 +1,6 @@
 import {createSlice,combineReducers  } from "@reduxjs/toolkit";
-import { addReview, fetchAllProducts,fetchProductsById,filterProducts, searchProducts, sortProducts } from "../Actions/actions";
+import { addNewProduct, addReview, deleteProduct, fetchAllProducts,fetchProductsById,filterProducts, searchProducts, sortProducts } from "../Actions/actions";
+import { toast} from 'react-toastify';
 
 const productSlice = createSlice({
     name: 'products',
@@ -8,10 +9,8 @@ const productSlice = createSlice({
       status: 'idle',
       error: null
     },
-    reducers:{
-
-    },
-    extraReducers: (builder) => {
+    reducers:{},
+    extraReducers:(builder) => {
       builder
         .addCase(fetchAllProducts.pending, (state) => {
           state.status = 'loading';
@@ -54,6 +53,28 @@ const productSlice = createSlice({
           state.products = action.payload;
         })
         .addCase(filterProducts.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.error.message;
+        })
+        .addCase(deleteProduct.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(deleteProduct.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          state.products = action.payload.products;
+          toast.success("Product deleted successfully",{position:"bottom-left"})
+        })
+        .addCase(deleteProduct.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.error.message;
+        }) .addCase(addNewProduct.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(addNewProduct.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          toast.success(`Product added successfully`,{position:"bottom-left"})
+        })
+        .addCase(addNewProduct.rejected, (state, action) => {
           state.status = 'failed';
           state.error = action.error.message;
         });

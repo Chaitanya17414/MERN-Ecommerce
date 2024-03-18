@@ -35,10 +35,11 @@ router.post("/addreview", async (req, res) => {
 
     product.reviews.push(review);
     if (product.reviews.length === 0) {
-      // If there are no reviews yet, set the rating to the new review's rating
+
       product.rating = review.rating;
+
     } else {
-      // Calculate the average rating
+    
       const totalRating = product.reviews.reduce((acc, curr) => acc + curr.rating, 0);
       const averageRating = totalRating / product.reviews.length;
       product.rating = averageRating;
@@ -50,5 +51,43 @@ router.post("/addreview", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+router.post("/deleteProduct",async (req, res) => {
+  try {
+      const {productId} =req.body
+          const result = await Product.findByIdAndDelete(productId);
+          if (result) {
+              const remainingProducts = await Product.find({});
+              res.send({ products: remainingProducts,status:"product deleted successfully" });
+          } else {
+              res.status(404).send("Product not found");
+          }
+      
+     
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+  }
+})
+router.post("/addProduct",async (req, res) => {
+  try {
+    const {product} = req.body
+    const productModel = new Product ({
+      title: product.title,
+      description:product.description,
+      price: product.price,
+      stock: product.stock,
+      brand: product.brand,
+      category:product.category,
+      thumbnail: product.thumbnail
+    })
+    await productModel.save();
+    res.send("Product added successfully")
+  }
+  catch (error) {
+    console.error(error.message);
+    res.status(500).send(error.message);
+}
+})
 
 module.exports = router;

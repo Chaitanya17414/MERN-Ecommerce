@@ -5,7 +5,8 @@ const getAuthToken= (user) =>{
     const token = jwt.sign ({
         _id: user._id,
         name: user.name,
-        email:user.email
+        email:user.email,
+        isAdmin:user.isAdmin
     },secretKey)
     return  token
 }

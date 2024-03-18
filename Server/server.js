@@ -4,6 +4,7 @@ const app = express();
 
 app.use(cors())
 app.use(express.json())
+require("dotenv").config()
 
 require("dotenv").config()
 var dbConnection = require('./db')
@@ -27,5 +28,7 @@ app.use((req, res, next) => {
     next();
 });
 
+const PORT =process.env.SERVER_PORT || 8080
 
-app.listen(8080,()=>console.log("Node server started"));
+
+app.listen(PORT,()=>console.log("Node server started"));

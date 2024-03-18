@@ -3,6 +3,7 @@ import Rating from "react-rating";
 import { useDispatch } from "react-redux";
 import { addReview } from "./Redux/Actions/actions";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Review({product,auth}) { 
     const [rating,setRating] = useState(0)
@@ -14,12 +15,12 @@ function Review({product,auth}) {
     const handleReview =() =>{
         var alreadyReviewed
          for (var i=0 ; i< product.reviews.length;i++) {
-            if(product.reviews[i].userID == auth._id){
+            if(product.reviews[i].userID === auth._id){
                 alreadyReviewed=true
             }
         }
         if (alreadyReviewed) {
-            alert("You have already reviewed this product")
+            toast.warning("You have already reviewed this product",{position:"bottom-left"})
         }else{
             const review = {
                 name: auth.name,
@@ -50,7 +51,7 @@ function Review({product,auth}) {
                             name="comment" 
                             className="border-gray-400 border p-3 my-2 "
                             rows="4" 
-                            cols="50"value={comment} onChange={(e)=>setComment(e.target.value)}/>
+                            cols="30"value={comment} onChange={(e)=>setComment(e.target.value)}/>
                             {auth._id ?(
                                 <div className="flex justify-end mb-6">
                                     <button className="rounded-md border border-orange-500 text-orange-500 px-4 
@@ -59,7 +60,7 @@ function Review({product,auth}) {
                                     <Link to="/login">
                                         <div className="flex justify-end mb-6">
                                             <button className="rounded-md border border-orange-500 text-orange-500 px-4 
-                                                py-2 hover:bg-orange-500 hover:text-white text-center w-1/3" onClick={handleReview}>Login to review</button>
+                                                py-2 hover:bg-orange-500 hover:text-white text-center w-1/3 sm:w-1/2" onClick={handleReview}>Login to review</button>
                                         </div>
                                     </Link>
                             )}
@@ -68,9 +69,9 @@ function Review({product,auth}) {
             <div>
                 <h2 className="text-xl font-medium text-center my-4">Latest Reviews</h2>
                 <p className="text-stone-500">Reviews:</p>
-                {product.reviews? (product.reviews.map((review)=>{
+                {product.reviews?.length>0? (product.reviews.map((review,index)=>{
                     return(
-                        <div>
+                        <div key={index}>
                             <div className="border-b-2 pb-2">
                                     <p className="text-sm py-1">
                                         <Rating

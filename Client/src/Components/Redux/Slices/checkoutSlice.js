@@ -1,6 +1,6 @@
 import { createSlice,combineReducers } from "@reduxjs/toolkit";
 
-const { checkoutUser, fetchOrdersByUser, fetchOrderById } = require("../Actions/actions");
+const { checkoutUser, fetchOrdersByUser, fetchOrderById, fetchAllOrders } = require("../Actions/actions");
 
 const checkoutSlice = createSlice({
     name:"checkout",
@@ -74,10 +74,34 @@ const orderByIdSlice = createSlice({
   },
 
 })
+const allOrdersSlice = createSlice({
+  name:"orderByUserSlice",
+  initialState: {
+    orders:[],
+    loading: false,
+    error:false
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAllOrders.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(fetchAllOrders.fulfilled, (state, action) => {
+        state.orders= action.payload
+        state.loading = false;
+      })
+      .addCase(fetchAllOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+      });
+  },
+
+})
 
 const rootOrderReducer = combineReducers({
   checkout: checkoutSlice.reducer,
   ordersByuser: ordersByUserSlice.reducer,
-  orderById: orderByIdSlice.reducer
+  orderById: orderByIdSlice.reducer,
+  allOrders: allOrdersSlice.reducer
 });
 export default rootOrderReducer;

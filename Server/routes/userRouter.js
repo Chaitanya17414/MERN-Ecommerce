@@ -55,33 +55,6 @@ router.post("/login",async(req,res) => {
     res.send(token)
 })
 
-//     const schema = Joi.object ({
-//         name:Joi.string().min(4).max(30).required(),
-//         email:Joi.string().min(6).max(200).required().email(),
-//         password:Joi.string().min(6).max(20).required(),
-//     })
-//     const {updatedUser,userId} = req.body
-
-//     const {error} = schema.validate(updatedUser)
-//     if(error) return res.status(400).send(error.details[0].message)
-//     let user = await User.findOne({email: updatedUser.email})
-//     if(user) return res.status(400).send("Email already in use. Please choose a different email...")
-
-//     user =  User.findByIdAndUpdate(userId,{
-//         name: updatedUser.name,
-//         email: updatedUser.email,
-//         password: updatedUser.password
-//     })
-
-//     const salt = await bcrypt.genSalt(10)
-//     user.password =  await bcrypt.hash(user.password,salt)
-
-//     user = await user.save()
-//     console.log(user)
-//     const token = getAuthToken(user)
-
-//     res.send(token)
-// })  
 router.post("/update", async (req, res) => {
     const schema = Joi.object({
         name: Joi.string().min(4).max(30).required(),
@@ -90,13 +63,11 @@ router.post("/update", async (req, res) => {
     });
 
     const { updatedUser, userId } = req.body;
-    console.log(req.body)
     const { error } = schema.validate(updatedUser);
 
     if (error) return res.status(400).send(error.details[0].message);
 
     try {
-        console.log(userId)
         let user = await User.findById(userId);
         if (!user) return res.status(404).send("User not found");
 
@@ -121,6 +92,35 @@ router.post("/update", async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
-
+ router.get("/getAllUsers",async (req, res) => {
+    try {
+        const docs = await User.find({});
+        res.send(docs)
+    }catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+ })
+ router.post("/deleteUser",async (req, res) => {
+    try {
+        const {userId,currUserId} =req.body
+        const currUser = await User.findById(currUserId);
+        if (currUser && currUser._id.toString() === userId) {
+        res.status(403).send("You cannot delete the current user.");
+    }  else {
+            const result = await User.findByIdAndDelete(userId);
+            if (result) {
+                const remainingUsers = await User.find({});
+                res.send({ users: remainingUsers, });
+            } else {
+                res.status(404).send("User not found");
+            }
+        }
+       
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+ })
 
 module.exports = router

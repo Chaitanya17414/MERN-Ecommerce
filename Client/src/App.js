@@ -3,21 +3,27 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from './Components/Navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './Components/Home';
-import Footer from './Components/Footer';
-import ProductDetail from './Components/ProductDetail';
+import Home from './Components/Srceens/Home';
+import Footer from './Components/Srceens/Footer';
+import ProductDetail from './Components/Srceens/ProductDetail';
 import {useDispatch } from 'react-redux';
-import Cart from './Components/Cart';
+import Cart from './Components/Srceens/Cart';
 import {ToastContainer} from "react-toastify"
-import Register from './Components/Register';
-import Login from './Components/Login';
+import Register from './Components/Srceens/Register';
+import Login from './Components/Srceens/Login';
 import { loadUser } from './Components/Redux/Slices/authSlice';
 import { useEffect } from 'react';
-import CheckoutSuccess from './Components/CheckoutSucess';
+import CheckoutSuccess from './Components/Srceens/CheckoutSucess';
 import NotFound from './Components/NotFound';
-import Order from './Components/Order';
-import OrderDetail from './Components/OrderDetail';
-import Profile from './Components/Profile';
+import Order from './Components/Srceens/Order';
+import OrderDetail from './Components/Srceens/OrderDetail';
+import Profile from './Components/Srceens/Profile';
+import Admin from './Components/Srceens/Admin';
+import UserList from './Components/Srceens/UserList';
+import TotalProducts from "./Components/Srceens/TotalProducts"
+import AddProduct from './Components/Srceens/AddProduct';
+import OrdersList from './Components/Srceens/OrdersList';
+import ProductsListing from './Components/Srceens/ProductsListing';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +40,7 @@ function App() {
       <Navbar />
         <Routes>
           <Route exact path="/" element={<Home/>}/>
+          <Route exact path="/products/" element={<ProductsListing />} />
           <Route exact path="/product/:id" element={<ProductDetail />} />
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/register" element={<Register />} />
@@ -42,6 +49,12 @@ function App() {
           <Route exact path="/order" element={<Order />} />
           <Route exact path="/order/:id" element={<OrderDetail />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/admin" element={<Admin />} >
+            <Route exact path="users-list" element={<UserList />} />
+            <Route exact path="products-list" element={<TotalProducts/>} />
+            <Route exact path="new-product" element={<AddProduct/>} />
+            <Route exact path="orders-list" element={<OrdersList/>} />
+          </Route>
           <Route exact path="*" element={<NotFound />} />
         </Routes>
         <Footer/>

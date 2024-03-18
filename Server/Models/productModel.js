@@ -47,8 +47,7 @@ const reviewSchema = mongoose.Schema ({
         required : true
     },
     rating:{
-        type : Number,
-        required : true
+        type : Number
     },
     stock:{
         type : Number,
