@@ -2,7 +2,8 @@ Home Page
 ![image](https://github.com/Chaitanya17414/MERN-Ecommerce/assets/87313646/4baf94f2-76a6-4854-83d0-7cfaa14ac117)
 
 PDP page
-![image](https://github.com/Chaitanya17414/MERN-Ecommerce/assets/87313646/007f0a1d-c0b8-4c22-8ab9-da2bfb83b6e3)
+![image](https://github.com/Chaitanya17414/MERN-Ecommerce/assets/87313646/464cd83f-528c-4e6c-a6bf-f783265b5ffe)
+
 
 Login and Register 
 ![image](https://github.com/Chaitanya17414/MERN-Ecommerce/assets/87313646/9c002d7f-6c8d-4f9f-98cc-ddf2968e27b6)
