@@ -23,12 +23,12 @@ function ProductsListing() {
       return <div>Error: {error}</div>;
     }
     return ( 
-        <div className="mt-10">
+        <div className="mt-10 sm:mx-4">
         <Filter />
         <div className="lg:container xl:container mx-auto md:mx-7">
             {status === 'loading' ? <PlpShimmer />:(
             <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 md:grid-cols-3 ">
-                {products?.length >0 ?(products.map((items)=>{
+                {products?.length >0 ?(products?.map((items)=>{
                     return(
                         <div key={items.title} className="p-4 xl:h-50 group text-left bg-white shadow-lg rounded-xl h-auto">
                             <Link to={`/product/${items._id}`}>
@@ -56,7 +56,7 @@ function ProductsListing() {
                         </div>
                     )
                 })):(
-                    <div className="my-8 text-red-500 text-xl text-center">No Products Found</div>
+                    <div className="my-8 text-red-500 text-xl text-center mx-auto container block ">No Products Found</div>
                 )}
             </div>
             )}

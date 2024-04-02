@@ -9,7 +9,6 @@ function OrderDetail() {
     const params = useParams();
     const paramId = params.id;
     const {order,loading} = useSelector((store)=> store.order?.orderById)
-    console.log("ordee",order)
 
     useEffect(()=>{
         dispatch(fetchOrderById(paramId))

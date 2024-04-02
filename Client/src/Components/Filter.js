@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { filterProducts, sortProducts } from './Redux/Actions/actions';
+import { filterProducts } from './Redux/Actions/actions';
 
 const Filter = () => {
-  const [selectedSortBy, setSelectedSortBy] = useState("popular");
-  const [selectedCategory, setSelectedCategory,] = useState("All");
+  const [sortkey, setsortkey] = useState("popular");
+  const [categorykey, setcategorykey,] = useState("all");
   const dispatch= useDispatch();
 
   const handleSort =(e) =>{
-    const selectedSortBy = e.target.value;
-    setSelectedSortBy(selectedSortBy)
-    dispatch(sortProducts(selectedSortBy))
+    const sortkey = e.target.value;
+    setsortkey(sortkey)
+   console.log(categorykey,sortkey)
+    dispatch(filterProducts({categorykey,sortkey}))
   }
   const handleCatogory =(e) =>{
-    const selectedCategory = e.target.value
-    setSelectedCategory(selectedCategory)
-  
-    dispatch(filterProducts(selectedCategory))
+    const categorykey = e.target.value
+    setcategorykey(categorykey)
+    console.log(categorykey,sortkey)
+    dispatch(filterProducts({categorykey,sortkey}))
   }
 
   return (
     <div className='lg:container xl:container flex justify-end gap-5 my-5 mx-auto sm:justify-center md:mx-7'>
         <div >
-            <select value={selectedSortBy} onChange={(e)=>handleSort(e)} className='p-3 border border-gray-500 rounded-lg bg-white'>
+            <select value={sortkey} onChange={(e)=>handleSort(e)} className='p-3 border border-gray-500 rounded-lg bg-white'>
                  <option  value="popular">Popular</option>
                  <option  value="htl">High To Low</option>
                  <option  value="lth">Low To High</option>   
@@ -30,7 +31,7 @@ const Filter = () => {
             </select>
         </div>
         <div>
-            <select value={selectedCategory} onChange={(e) => handleCatogory(e)} className='p-3 border border-gray-500 rounded-lg bg-white'>
+            <select value={categorykey} onChange={(e) => handleCatogory(e)} className='p-3 border border-gray-500 rounded-lg bg-white'>
                  <option  value="all">All</option>
                  <option  value="smartphones">Smart Phones</option>
                  <option  value="laptops">Laptops</option>

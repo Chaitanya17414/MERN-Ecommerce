@@ -35,11 +35,11 @@ function App() {
   return (
     
     <div className="text-center bg-gray-100 min-h-screen">
-     <BrowserRouter>
+     <BrowserRouter  basename="/">
      <ToastContainer />
       <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home/>}/>
+          <Route  path="/" element={<Home/>}/>
           <Route exact path="/products/" element={<ProductsListing />} />
           <Route exact path="/product/:id" element={<ProductDetail />} />
           <Route exact path="/cart" element={<Cart />} />

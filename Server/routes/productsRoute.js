@@ -57,8 +57,9 @@ router.post("/deleteProduct",async (req, res) => {
       const {productId} =req.body
           const result = await Product.findByIdAndDelete(productId);
           if (result) {
-              const remainingProducts = await Product.find({});
-              res.send({ products: remainingProducts,status:"product deleted successfully" });
+             const products = await Product.find({});
+             products.save()
+              res.send("product deleted successfully");
           } else {
               res.status(404).send("Product not found");
           }

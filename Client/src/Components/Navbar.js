@@ -22,6 +22,11 @@ function Navbar() {
     const handleSearch=() => {
         dispatch(searchProducts(searchKey))
     }
+    const handleEnterKey = (e)=>{
+        if (e.key === "Enter") {
+            dispatch(searchProducts(searchKey))
+        }
+    }
     return ( 
         <div className="mx-auto bg-black px-10 grid grid-cols-3 gap-4 sticky top-0 z-[999] sm:px-4">
             <Link to="/"><div>
@@ -37,6 +42,7 @@ function Navbar() {
                                 className="search-input p-2 w-full mt-2 rounded-lg sm:mb-2"
                                 placeholder="Search for..." 
                                 onChange={(e) => setSearchKey(e.target.value)}
+                                onKeyDown={(e) => handleEnterKey(e) }
                     />
                     <span className="text-white flex ms-2 items-center justify-center mt-2 " onClick={handleSearch}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -44,12 +50,12 @@ function Navbar() {
                         </svg></span>
                 </label>
             </div>
-            <div className="grid grid-cols-2 col-start-8 sm:hidden">
+            <div className="grid grid-cols-2 col-start-8 sm:hidden md:hidden">
                 <div className="group flex items-center justify-center text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                     </svg><span className="mr-2 sm:hidden md:hidden">{auth.name}</span>
-                    <div className="p-1 hidden group-hover:flex w-[150px] h-40 bg-white
+                    <div className="p-1 pb-5 hidden group-hover:flex w-[150px] h-auto bg-white
                      rounded-lg absolute right-[100px] top-12 text-black z-40 shadow-lg">
                         {auth._id ? (
                             <div>
@@ -100,13 +106,13 @@ function Navbar() {
                     <span className="rounded-lg p-2 bg-red-500">{cartTotalQuantity}</span>
                 </div></Link>
             </div>
-            <div className="grid-cols-2 col-end-8 col-span-2 hidden sm:grid">
+            <div className="grid-cols-2 col-end-8 col-span-2 hidden sm:grid md:grid">
                 <div className="group flex items-center justify-center text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                     <span className="mr-2 sm:hidden">{auth.name}</span>
-                    <div className="p-1 hidden group-hover:block w-[150px] h-[12rem] bg-white
+                    <div className="p-1 hidden group-hover:block w-[150px] sm:h-auto md:h-auto bg-white
                      rounded-lg absolute right-[20px] top-12 text-black z-40 shadow-lg sm:">
                         {auth._id ? (
                             <div>

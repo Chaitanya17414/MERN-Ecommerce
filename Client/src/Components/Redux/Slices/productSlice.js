@@ -1,5 +1,5 @@
 import {createSlice,combineReducers  } from "@reduxjs/toolkit";
-import { addNewProduct, addReview, deleteProduct, fetchAllProducts,fetchProductsById,filterProducts, searchProducts, sortProducts } from "../Actions/actions";
+import { addNewProduct, addReview, deleteProduct, fetchAllProducts,fetchProductsById,filterProducts, searchProducts } from "../Actions/actions";
 import { toast} from 'react-toastify';
 
 const productSlice = createSlice({
@@ -31,17 +31,6 @@ const productSlice = createSlice({
           state.products = action.payload;
         })
         .addCase(searchProducts.rejected, (state, action) => {
-          state.status = 'failed';
-          state.error = action.error.message;
-        })
-        .addCase(sortProducts.pending, (state) => {
-          state.status = 'loading';
-        })
-        .addCase(sortProducts.fulfilled, (state, action) => {
-          state.status = 'succeeded';
-          state.products = action.payload;
-        })
-        .addCase(sortProducts.rejected, (state, action) => {
           state.status = 'failed';
           state.error = action.error.message;
         })

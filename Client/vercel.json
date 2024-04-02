@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "https://no-eosin-iota.vercel.app/"
+      }
+    ]
+  }

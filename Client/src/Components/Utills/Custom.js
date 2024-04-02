@@ -14,7 +14,8 @@ export const carouselData = [
     }
 
 ]
-export const url = "http://localhost:8080/api";
+export const rootUrl = process.env.NODE_ENV === 'production' ? 
+'https://mern-ecommerce-backend-4aeb.onrender.com' : 'http://localhost:8000'
 export const products= [{
   "id":1,
     "rating": 5,
